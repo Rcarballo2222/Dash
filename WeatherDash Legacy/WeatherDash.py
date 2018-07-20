@@ -96,22 +96,26 @@ def retry_attempt():
     time_start = time.time()
     retry_timeout = TIMEOUT * 2
     not_connected = True
-    
+    print("Error")
+    """
     lcd.clear()
     lcd.puts("Error") 
     lcd.pos(1)
     lcd.puts("Unable to update data")
     lcd.pos(2)
     lcd.puts("Check your Internet Connection")
+    """
     time.sleep(1)
     i = 10
     while(i > 0):
+        """
         text = "Retrying in " + "  " + " seconds..."
         lcd.pos(3)
         lcd.puts(text)
         text = "Retrying in " + str(i) + " seconds..."
         lcd.pos(3)
         lcd.puts(text)
+        """
         time.sleep(1)
         i -= 1
     try:
@@ -129,10 +133,12 @@ def retry_attempt():
                     time.sleep(2)
                     continue
     except timeout.TimeoutError:
+        """
         lcd.pos(4)
         lcd.puts("Failed.")
         lcd.pos(5)
         lcd.puts("Rebooting device in 5s")
+        """
         time.sleep(5)
         reboot()
     
@@ -185,7 +191,7 @@ def update():
     global cur_location
     global fio
     
-    lcd.clear()
+    #lcd.clear()
     
     """
     Main Code
@@ -201,8 +207,9 @@ def update():
     temp = weather.get_temperature(current)
     icon = icons[weather.get_icon(current)]
     chance_of_rain = weather.get_rain_chance(fio)
-    lcd.clear()
-
+    print(temp)
+    #lcd.clear()
+    """
     screen = images.display_img(icon, screen, lcd, 70, 77)
     screen = fonts.display_s(str(temp) + "d",font, screen, lcd, 5, 5, 7)
     screen = images.display_img(icons["umbrella"], screen, lcd, 20, 40, 48)
@@ -211,7 +218,8 @@ def update():
         screen = fonts.display_s(str(chance_of_rain) + "p",font, screen, lcd, 2, 57, 48)
     temp = open(TEMP_FILE, "w")
     pickle.dump(screen, temp, -1)
-          
+    """
+
 def main():
     lcd.clear()
     cur_time = str(datetime.now().time())
@@ -232,4 +240,5 @@ def main():
         sleep()
     
 if __name__ == '__main__':
-    main()
+    update()
+    #main()
