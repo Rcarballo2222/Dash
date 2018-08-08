@@ -31,9 +31,4 @@ def rotatel(row, steps=1):
     if lost:
         row[0] |= (lost >> (8-steps))
 
-    return row
-
-    for i in range(d):
-        leftRotatebyOne(arr, n)
-
-(n << d)|(n >> (INT_BITS - d))        
+    return row       
