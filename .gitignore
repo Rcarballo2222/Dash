@@ -1,3 +1,8 @@
 WeatherDash Legacy/Forecast_IO_py/dist/
 WeatherDash Legacy/Forecast_IO_py/build/
 WeatherDash Legacy/Forecast_IO_py/forecastiopy.egg-info/
+WeatherDash Legacy/ST7565_LCD/build/
+WeatherDash Legacy/ST7565_LCD/dist/
+WeatherDash Legacy/ST7565_LCD/st7565.egg-info/
+*.tmp
+*.pyc
