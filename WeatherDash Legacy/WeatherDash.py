@@ -12,9 +12,9 @@ import Adafruit_BBIO.SPI as SPI
 
 import ST7565_LCD.st7565.images.images as images
 import ST7565_LCD.st7565.fonts.fonts as fonts
-import ST7565_LCD.st7565.bitmap as bitmap
-import ST7565_LCD.st7565.fonts.font5x7 as font5x7
-import ST7565_LCD.st7565.lcd as lcd
+#import ST7565_LCD.st7565.bitmap as bitmap
+#import ST7565_LCD.st7565.fonts.font5x7 as font5x7
+#import ST7565_LCD.st7565.lcd as lcd
 
 import Forecast_IO_py.weather as weather
 import Forecast_IO_py.forecastiopy.ForecastIO as ForecastIO
@@ -48,10 +48,12 @@ TIMEOUT = 30 #Timeout for pulling data from Darksky
 FONT = "segoe_ui" #Font to use for displaying numbers
 cur_location = [25.6781743,-80.326881] #Current location [Lattitude, Longitude]
 
-""""""
+"""
 font = fonts.create_font(FONT)
 lcd = lcd.LCD(adafruit=True)  
 screen = bitmap.Bitmap()
+"""
+
 icons = images.create_images()
 fio = ForecastIO.ForecastIO(APIKEY,units=ForecastIO.ForecastIO.UNITS_US,lang=ForecastIO.ForecastIO.LANG_ENGLISH)
 
@@ -207,7 +209,7 @@ def update():
     temp = weather.get_temperature(current)
     icon = icons[weather.get_icon(current)]
     chance_of_rain = weather.get_rain_chance(fio)
-    print(temp)
+    print(temp, weather.get_icon(current))
     #lcd.clear()
     """
     screen = images.display_img(icon, screen, lcd, 70, 77)
