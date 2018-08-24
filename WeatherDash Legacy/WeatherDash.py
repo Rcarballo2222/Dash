@@ -42,15 +42,15 @@ global fio
 """
 User-Settings
 """
-TIMEZONE = "ET" #Current timezone
+TIMEZONE = "CT" #Current timezone
 APIKEY = "ecec575b921533aa1148c52df084d94b" #Darksky API Key
 TIMEOUT = 30 #Timeout for pulling data from Darksky
 FONT = "segoe_ui" #Font to use for displaying numbers
-cur_location = [25.6781743,-80.326881] #Current location [Lattitude, Longitude]
+cur_location = [29.7196289,-95.4079457] #Current location [Lattitude, Longitude]
 
 """
 font = fonts.create_font(FONT)
-lcd = lcd.LCD(adafruit=True)  
+lcd = lcd.LCD(adafruit=True)
 screen = bitmap.Bitmap()
 """
 
