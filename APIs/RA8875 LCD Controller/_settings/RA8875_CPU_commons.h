@@ -29,7 +29,7 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 --------------------------------------------------------------
 */
 #if defined(ENERGIA)
-	#include "Energia.h"
+	//#include "Energia.h"
 	#undef byte
 	#define byte uint8_t
 	#if defined(__TM4C129XNCZAD__) || defined(__TM4C1294NCPDT__)//tiva???
@@ -58,7 +58,7 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 		#define _FORCE_PROGMEM__
 	#endif
 	#define __PRGMTAG_	PROGMEM
-	#include "Arduino.h"
+	//  #include "Arduino.h"
 	#include <math.h>
 	#include <avr/pgmspace.h>
 #elif defined(__MK20DX128__) || defined(__MK20DX256__) || defined(__MKL26Z64__)
@@ -70,7 +70,7 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 */
 	#define ___TEENSYES
 	#define _FASTCPU
-	#include "Arduino.h"
+	//#include "Arduino.h"
 	#include <avr/pgmspace.h>//Teensy3 and AVR arduinos can use pgmspace.h
 	#if defined(_FORCE_PROGMEM__)
 		#undef _FORCE_PROGMEM__
@@ -86,7 +86,7 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 */
 	#define ___CHIPKIT
 	#define _FASTCPU
-	#include "Arduino.h"
+	//#include "Arduino.h"
 	#ifndef __PGMSPACE_H_
 	  #define __PGMSPACE_H_ 1
 	  #define PROGMEM
@@ -106,7 +106,7 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 */
 	#define ___DUESTUFF
 	#define _FASTCPU
-	#include "Arduino.h"
+	//#include "Arduino.h"
 	#ifndef __PGMSPACE_H_
 	  #define __PGMSPACE_H_ 1
 	  #define PROGMEM
@@ -126,7 +126,7 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 */
 	#define ___DUESTUFF
 	#define _FASTCPU
-	#include "Arduino.h"
+	//#include "Arduino.h"
 	#ifndef __PGMSPACE_H_
 	  #define __PGMSPACE_H_ 1
 	  #define PROGMEM
@@ -144,7 +144,7 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 --------------------------------------------------------------
 */
 	#define ___STM32STUFF
-	#include "Arduino.h"
+	//#include "Arduino.h"
 	#if defined(_FORCE_PROGMEM__)
 		#undef _FORCE_PROGMEM__
 	#endif
@@ -159,7 +159,7 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 	#if defined(_FORCE_PROGMEM__)
 		#undef _FORCE_PROGMEM__
 	#endif
-	#include "Arduino.h"
+	//#include "Arduino.h"
 	#define __PRGMTAG_	
 	#warning "Generic Arm detected, not sure if your board it's compatible!"
 #elif defined(__XTENSA__)
@@ -169,7 +169,7 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 	It compiles but never tested
 --------------------------------------------------------------
 */
-	#include "Arduino.h"
+	//#include "Arduino.h"
 	#if defined(_FORCE_PROGMEM__)
 		#undef _FORCE_PROGMEM__
 		#define PROGMEM __attribute__((section(".progmem.data")))
