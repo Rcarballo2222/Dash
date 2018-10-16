@@ -3,7 +3,7 @@ import os
 import time
 import urllib2 
 
-os.system("gpio mode 6 out && gpio mode 5 out")
+os.system("gpio mode 21 out && gpio mode 22 out")
 
 while True:
     try:
