@@ -19,7 +19,7 @@ License:GNU General Public License v3.0
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <wiringPi.h>
+#include <SPI.h>
 #include "RA8875.h"
 
 
