@@ -204,6 +204,8 @@ class RA8875 : public Print {
 		RA8875(const uint8_t CSp, const uint8_t RSTp=255);
 	#elif defined(NEEDS_SET_MODULE)//ENERGIA
 		RA8875::RA8875(const uint8_t module, const uint8_t RSTp=255);
+	#elif defined(__RPI__) //Raspberry Pi
+		RA8875(const int CS=1,const uint8_t RSTp=255);
 	#else//8 BIT ARDUINO's
 		RA8875(const uint8_t CSp, const uint8_t RSTp=255);
 	#endif
@@ -727,12 +729,16 @@ void _slowDownSPI(bool slow,uint32_t slowSpeed=10000000UL)
 		if (slow){
 			#if defined(___DUESTUFF) && defined(SPI_DUE_MODE_EXTENDED)
 				SPI.setClockDivider(_cs,SPI_SPEED_SAFE);
+			#elif defined(__RPI__)
+				fd = wiringPiSPISetup(_cs, SPI_SPEED_SAFE);	
 			#else
 				SPI.setClockDivider(SPI_SPEED_SAFE);
 			#endif
 		} else {
 			#if defined(___DUESTUFF) && defined(SPI_DUE_MODE_EXTENDED)
 				SPI.setClockDivider(_cs,SPI_SPEED_WRITE);
+			#elif defined(__RPI__)
+				fd = wiringPiSPISetup(_cs, SPI_SPEED_WRITE);	
 			#else
 				SPI.setClockDivider(SPI_SPEED_WRITE);
 			#endif

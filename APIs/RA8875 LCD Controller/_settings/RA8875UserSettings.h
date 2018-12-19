@@ -221,6 +221,10 @@ DO NOT Exceed 23Mhz for RA8875! It will result in garbage on screen or run very 
 			#define SPI_SPEED_READ 		SPI_CLOCK_DIV8
 			#define SPI_SPEED_SAFE 		SPI_CLOCK_DIV6	//10.5Mhz
 			//#define _FASTSSPORT
+		#elif defined(__RPI__)
+			#define SPI_SPEED_WRITE 	SPI_CLOCK_DIV4	//125.0 MHz max -> /2 = 62.5Mhz
+			#define SPI_SPEED_READ 		SPI_CLOCK_DIV4
+			#define SPI_SPEED_SAFE 		SPI_CLOCK_DIV8
 		#else
 		// TODO: Add more CPU here!
 	//rest of the world included UNO, etc.

@@ -18,8 +18,12 @@ License:GNU General Public License v3.0
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#if defined (__RPI__) //Using wiringPi library for SPI on the Raspberry Pi
+	#include <wiringPiSPI.h>
+#else
+	#include <SPI.h>
+#endif
 
-#include <SPI.h>
 #include "RA8875.h"
 
 
@@ -94,7 +98,13 @@ Bit:	Called by:		In use:
 		selectCS(module);
 		_rst = RSTp;
 		_cs = 255;
-//----------------------------8 BIT ARDUINO's---------------------------------------
+//----------------------------Raspberry Pi----------------------------------------
+#elif defined(__RPI__)
+	RA8875::RA8875(const int CS, const uint8_t RSTp)
+	{
+		_cs = CS;
+		_rst = RSTp;
+//----------------------------8 BIT ARDUINO's-------------------------------------
 #else
 	RA8875::RA8875(const uint8_t CSp, const uint8_t RSTp) 
 	{
@@ -395,8 +405,10 @@ void RA8875::begin(const enum RA8875sizes s,uint8_t colors)
 			SPI.begin();
 			_errorCode |= (1 << 3);//set
 		#endif
+	#elif defined(__RPI__)//Raspberry Pi
+		int fd;
 	#endif
-	#if !defined(ENERGIA)//everithing but ENERGIA
+	#if !(defined(ENERGIA) || defined(__RPI__))//everithing but ENERGIA and RPI
 		#if defined(___TEENSYES)//all of them (32 bit only)
 			pinMode(_cs, OUTPUT);
 			digitalWrite(_cs, HIGH);
@@ -457,6 +469,8 @@ void RA8875::begin(const enum RA8875sizes s,uint8_t colors)
 			SPI.setClockDivider(SPI_SPEED_SAFE);
 			delay(1);
 			SPI.setDataMode(SPI_MODE3);
+		#elif defined(__RPI__)//Raspberry Pi
+			fd = wiringPiSPISetup(_cs, SPI_SPEED_SAFE);
 		#else
 			#if defined(___DUESTUFF) && defined(SPI_DUE_MODE_EXTENDED)
 				SPI.setClockDivider(_cs,SPI_SPEED_SAFE);
@@ -575,6 +589,8 @@ void RA8875::_initialize()
 		#else
 			#if defined(___DUESTUFF) && defined(SPI_DUE_MODE_EXTENDED)
 				SPI.setClockDivider(_cs,SPI_SPEED_WRITE);
+			#elif defined(__RPI__)
+				fd = wiringPiSPISetup(_cs, SPI_SPEED_SAFE);	
 			#else
 				SPI.setClockDivider(SPI_SPEED_WRITE);
 			#endif
@@ -3246,6 +3262,8 @@ void RA8875::drawPixels(uint16_t p[], uint16_t count, int16_t x, int16_t y)
 			} else {
 				SPI.transfer(RA8875_DATAWRITE);
 			}
+		#elif defined(__RPI__)
+				wiringPiSPIDataRW(_cs, RA8875_DATAWRITE, 1);		
 		#else
 			SPI.transfer(RA8875_DATAWRITE);
 		#endif
@@ -3287,6 +3305,12 @@ void RA8875::drawPixels(uint16_t p[], uint16_t count, int16_t x, int16_t y)
 			} else {//TOTEST:layer bug workaround for 8bit color!
 				SPI.transfer(_cs, temp & 0xFF, SPI_LAST);
 			}
+		#elif defined(__RPI__)
+				if (_color_bpp > 8){
+					wiringPiSPIDataRW(_cs, temp, 2);
+				} else {//TOTEST:layer bug workaround for 8bit color!
+					wiringPiSPIDataRW(_cs, temp >> 8, 2);
+				}	
 		#else
 			#if defined(__AVR__) && defined(_FASTSSPORT)
 				if (_color_bpp > 8){
@@ -4058,7 +4082,7 @@ void RA8875::fillEllipse(int16_t xCenter, int16_t yCenter, int16_t longAxis, int
       yCenter:   y location of the ellipse center
       longAxis:  Size in pixels of the long axis
       shortAxis: Size in pixels of the short axis
-      curvePart: Curve to draw in clock-wise dir: 0[180-270°],1[270-0°],2[0-90°],3[90-180°]
+      curvePart: Curve to draw in clock-wise dir: 0[180-270ï¿½],1[270-0ï¿½],2[0-90ï¿½],3[90-180ï¿½]
       color: RGB565 color
 */
 /**************************************************************************/
@@ -4083,7 +4107,7 @@ void RA8875::drawCurve(int16_t xCenter, int16_t yCenter, int16_t longAxis, int16
       yCenter:   y location of the ellipse center
       longAxis:  Size in pixels of the long axis
       shortAxis: Size in pixels of the short axis
-      curvePart: Curve to draw in clock-wise dir: 0[180-270°],1[270-0°],2[0-90°],3[90-180°]
+      curvePart: Curve to draw in clock-wise dir: 0[180-270ï¿½],1[270-0ï¿½],2[0-90ï¿½],3[90-180ï¿½]
       color: RGB565 color
 */
 /**************************************************************************/
@@ -5528,6 +5552,9 @@ void RA8875::_writeData(uint8_t data)
 		#if defined(__AVR__) && defined(_FASTSSPORT)
 			_spiwrite(RA8875_DATAWRITE);
 			_spiwrite(data);
+		#elif defined(__RPI__)
+			wiringPiSPIDataRW(_cs, RA8875_DATAWRITE, 1);
+			wiringPiSPIDataRW(_cs, data, 1);
 		#else
 			#if defined(SPI_HAS_TRANSACTION) && defined(__MKL26Z64__)	
 				if (_altSPI){
@@ -5607,6 +5634,8 @@ uint8_t RA8875::_readData(bool stat)
 	#else
 		#if defined(___DUESTUFF) && defined(SPI_DUE_MODE_EXTENDED)
 			if (_inited) SPI.setClockDivider(_cs,SPI_SPEED_READ);
+		#elif defined(__RPI__)
+			if (_inited) fd = wiringPiSPISetup(_cs, SPI_SPEED_READ);
 		#else
 			if (_inited) SPI.setClockDivider(SPI_SPEED_READ);
 		#endif
@@ -5619,6 +5648,9 @@ uint8_t RA8875::_readData(bool stat)
 		#if defined(__AVR__) && defined(_FASTSSPORT)
 			stat == true ? _spiwrite(RA8875_CMDREAD) : _spiwrite(RA8875_DATAREAD);
 			uint8_t x = _spiread();
+		#elif defined(__RPI__)
+			stat == true ? wiringPiSPIDataRW(_cs, RA8875_CMDREAD, 1) : wiringPiSPIDataRW(_cs, RA8875_DATAREAD, 1);
+			uint8_t x = wiringPiSPIDataRW(_cs, 0x00, 1);
 		#else
 			#if defined(SPI_HAS_TRANSACTION) && defined(__MKL26Z64__)	
 				uint8_t x;
@@ -5641,6 +5673,8 @@ uint8_t RA8875::_readData(bool stat)
 	#else
 		#if defined(___DUESTUFF) && defined(SPI_DUE_MODE_EXTENDED)
 			if (_inited) SPI.setClockDivider(_cs,SPI_SPEED_WRITE);
+		#elif defined(__RPI__)
+			if (_inited) fd = wiringPiSPISetup(_cs, SPI_SPEED_WRITE);
 		#else
 			if (_inited) SPI.setClockDivider(SPI_SPEED_WRITE);
 		#endif
@@ -5676,6 +5710,9 @@ void RA8875::writeCommand(const uint8_t d)
 		#if defined(__AVR__) && defined(_FASTSSPORT)
 			_spiwrite(RA8875_CMDWRITE);
 			_spiwrite(d);
+		#elif defined(__RPI__)
+			wiringPiSPIDataRW(_cs, RA8875_CMDWRITE, 1);
+			wiringPiSPIDataRW(_cs, d, 1);
 		#else
 			#if defined(SPI_HAS_TRANSACTION) && defined(__MKL26Z64__)	
 				if (_altSPI){

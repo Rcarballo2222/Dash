@@ -175,8 +175,16 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 		#define PROGMEM __attribute__((section(".progmem.data")))
 	#endif
 	#define __PRGMTAG_	
+#elif defined(__RPI__)
+/* 
+--------------------------------------------------------------
+			Raspberry Pi (All Models)
+	Should work for all models (using wiringPi library) but not tested
+--------------------------------------------------------------
+*/
+	#include <wiringPi.h>
 #else
-	#error "your board it's not supported yet!"
+	#error "your board is not supported yet!"
 #endif
 
 #include "Print.h"
