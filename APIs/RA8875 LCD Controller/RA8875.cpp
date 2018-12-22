@@ -20,6 +20,7 @@ License:GNU General Public License v3.0
 */
 #if defined (__RPI__) //Using wiringPi library for SPI on the Raspberry Pi
 	#include <wiringPiSPI.h>
+	#include <wiringPi.h>
 #else
 	#include <SPI.h>
 #endif
@@ -100,8 +101,17 @@ Bit:	Called by:		In use:
 		_cs = 255;
 //----------------------------Raspberry Pi----------------------------------------
 #elif defined(__RPI__)
-	RA8875::RA8875(const int CS, const uint8_t RSTp)
+	RA8875::RA8875(const uint8_t CS, const uint8_t RSTp)
 	{
+		//Which Chip Select to use
+		switch(CS) {
+			case 0:
+				_csp = 10; //Pin 24 
+			break;
+			case 1;
+				_csp = 11; //Pin 26	
+		}
+		
 		_cs = CS;
 		_rst = RSTp;
 //----------------------------8 BIT ARDUINO's-------------------------------------
@@ -407,6 +417,8 @@ void RA8875::begin(const enum RA8875sizes s,uint8_t colors)
 		#endif
 	#elif defined(__RPI__)//Raspberry Pi
 		int fd;
+		pinMode(_csp, OUTPUT);
+		digitalWrite(_csp, 1);
 	#endif
 	#if !(defined(ENERGIA) || defined(__RPI__))//everithing but ENERGIA and RPI
 		#if defined(___TEENSYES)//all of them (32 bit only)

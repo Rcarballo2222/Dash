@@ -205,7 +205,7 @@ class RA8875 : public Print {
 	#elif defined(NEEDS_SET_MODULE)//ENERGIA
 		RA8875::RA8875(const uint8_t module, const uint8_t RSTp=255);
 	#elif defined(__RPI__) //Raspberry Pi
-		RA8875(const int CS=1,const uint8_t RSTp=255);
+		RA8875(const int CS, const uint8_t RSTp=255);
 	#else//8 BIT ARDUINO's
 		RA8875(const uint8_t CSp, const uint8_t RSTp=255);
 	#endif
@@ -457,6 +457,9 @@ using Print::write;
 		uint8_t 				  _miso, _mosi, _sclk;
 	#elif defined(ENERGIA)
 		uint8_t _cs;
+	#elif defined(__RPI__)
+		uint8_t 				  _cs;
+		uint8_t 				  _csp;	
 	#else
 		#if defined(___DUESTUFF)
 			#if defined(_FASTSSPORT)
@@ -650,6 +653,8 @@ using Print::write;
 		#endif//end has transaction
 		#if defined(___TEENSYES)//all of them (32 bit only)
 			digitalWriteFast(_cs, LOW);
+		#elif defined(__RPI__)
+			digitalWrite(_csp, 0);	
 		#else
 			#if !defined(ENERGIA)//UNO,DUE,ETC.
 				#if defined(___DUESTUFF) && defined(SPI_DUE_MODE_EXTENDED)//DUE extended SPI
@@ -671,6 +676,8 @@ using Print::write;
 	void _endSend(){
 	#if defined(___TEENSYES)//all of them (32 bit only)
 		digitalWriteFast(_cs, HIGH);
+	#elif defined(__RPI__)
+		digitalWrite(_csp, 1);	
 	#else
 		#if !defined(ENERGIA)
 			#if defined(___DUESTUFF) && defined(SPI_DUE_MODE_EXTENDED)//DUE extended SPI
@@ -686,6 +693,7 @@ using Print::write;
 			digitalWrite(_cs, HIGH);
 		#endif
 	#endif
+	
 	#if defined(SPI_HAS_TRANSACTION)
 		#if defined(__MKL26Z64__)	
 			_altSPI == true ? SPI1.endTransaction() : SPI.endTransaction();

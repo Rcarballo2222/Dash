@@ -183,6 +183,7 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 --------------------------------------------------------------
 */
 	#include <wiringPi.h>
+	#include <wiringPiSPI.h>
 #else
 	#error "your board is not supported yet!"
 #endif
