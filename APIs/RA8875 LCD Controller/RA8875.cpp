@@ -3309,7 +3309,7 @@ void RA8875::drawPixels(uint16_t p[], uint16_t count, int16_t x, int16_t y)
 				if (_color_bpp > 8){
 					wiringPiSPIDataRW(_cs, temp, 2);
 				} else {//TOTEST:layer bug workaround for 8bit color!
-					wiringPiSPIDataRW(_cs, temp >> 8, 2);
+					wiringPiSPIDataRW(_cs, temp >> 8, 1);
 				}	
 		#else
 			#if defined(__AVR__) && defined(_FASTSSPORT)
@@ -3363,6 +3363,9 @@ uint16_t RA8875::getPixel(int16_t x, int16_t y)
 				SPI.transfer(RA8875_DATAREAD);
 				SPI.transfer(0x00);//first byte it's dummy
 			}
+		#elif defined(__RPI__)
+			wiringPiSPIDataRW(_cs, RA8875_DATAREAD, 1);
+			wiringPiSPIDataRW(_cs, 0x00, 1); //first byte it's dummy
 		#else
 			SPI.transfer(RA8875_DATAREAD);
 			SPI.transfer(0x00);//first byte it's dummy
@@ -3382,6 +3385,9 @@ uint16_t RA8875::getPixel(int16_t x, int16_t y)
 		#if defined(___DUESTUFF) && defined(SPI_DUE_MODE_EXTENDED)
 			color  = SPI.transfer(_cs, 0x0, SPI_CONTINUE); 
 			color |= (SPI.transfer(_cs, 0x0, SPI_LAST) << 8);
+		#elif defined(__RPI__)
+			color = wiringPiSPIDataRW(_cs, 0x0, 1);
+			color |= wiringPiSPIDataRW(_cs, 0x0, 1) << 8;	
 		#else
 			#if defined(__AVR__) && defined(_FASTSSPORT)
 				color  = _spiread();
@@ -5449,6 +5455,8 @@ void RA8875::sleep(boolean sleep)
 				#else
 					#if defined(___DUESTUFF) && defined(SPI_DUE_MODE_EXTENDED)
 						SPI.setClockDivider(_cs,SPI_SPEED_READ);
+					#elif defined(__RPI__)
+						fd = wiringPiSPISetup(_cs, SPI_SPEED_READ);
 					#else
 						SPI.setClockDivider(SPI_SPEED_READ);
 					#endif
@@ -5486,6 +5494,8 @@ void RA8875::sleep(boolean sleep)
 				#else
 					#if defined(___DUESTUFF) && defined(SPI_DUE_MODE_EXTENDED)
 						SPI.setClockDivider(_cs,SPI_SPEED_WRITE);
+					#elif defined(__RPI__)
+						fd = wiringPiSPISetup(_cs, SPI_SPEED_WRITE);	
 					#else
 						SPI.setClockDivider(SPI_SPEED_WRITE);
 					#endif
@@ -5592,6 +5602,8 @@ void  RA8875::writeData16(uint16_t data)
 			} else {
 				SPI.transfer(RA8875_DATAWRITE);
 			}
+		#elif defined(__RPI__)
+			wiringPiSPIDataRW(_cs, RA8875_DATAWRITE, 1);	
 		#else
 			SPI.transfer(RA8875_DATAWRITE);
 		#endif
@@ -5610,6 +5622,8 @@ void  RA8875::writeData16(uint16_t data)
 		#if defined(___DUESTUFF) && defined(SPI_DUE_MODE_EXTENDED)
 			SPI.transfer(_cs, highByte(data), SPI_CONTINUE); 
 			SPI.transfer(_cs, lowByte(data), SPI_LAST);
+		#elif defined(__RPI__)
+			wiringPiSPIDataRW(_cs, data, 2);
 		#else
 			#if defined(__AVR__) && defined(_FASTSSPORT)
 				_spiwrite16(data);
