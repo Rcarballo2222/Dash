@@ -405,7 +405,9 @@ virtual size_t write(const uint8_t *buffer, size_t size) {
 	return size;
 }
 
-using Print::write;
+#if !defined(__RPI__)
+	using Print::write;
+#endif
 
  protected:
 	volatile bool 				  _textMode;
