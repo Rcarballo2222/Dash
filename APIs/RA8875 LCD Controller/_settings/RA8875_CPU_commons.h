@@ -56,6 +56,9 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 */
 	#include <wiringPi.h>
 	#include <wiringPiSPI.h>
+	#include <stdint.h>
+	typedef uint8_t boolean;
+	#define F_CPU 16000000L
 
 #elif defined(__AVR__)
 /* 
@@ -189,6 +192,8 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 	#error "your board is not supported yet!"
 #endif
 
-//#include "Print.h"
+#if !defined(__RPI__)
+	#include "Print.h"
+#endif
 
 #endif
