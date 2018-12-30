@@ -126,6 +126,10 @@ CS       10		53           YES       CS
 #ifndef _RA8875MC_H_
 #define _RA8875MC_H_
 
+#if defined(__RPI__)
+	#include "Print.h"
+#endif
+
 #include "_settings/RA8875_CPU_commons.h"
 
 #if !defined(swapvals)
@@ -188,8 +192,6 @@ template <typename T> T PROGMEM_read (const T * sce)
 #ifdef SPI_HAS_TRANSACTION
 	static volatile uint32_t _SPImaxSpeed;//holder for SPI speed
 #endif
-
-
 
 class RA8875 : public Print {
  public:
@@ -405,7 +407,9 @@ virtual size_t write(const uint8_t *buffer, size_t size) {
 	return size;
 }
 
+//#if !defined(__RPI__)
 using Print::write;
+//#endif
 
  protected:
 	volatile bool 				  _textMode;
@@ -648,7 +652,7 @@ using Print::write;
 			#else
 				SPI.beginTransaction(SPISettings(_SPImaxSpeed, MSBFIRST, SPI_MODE3));
 			#endif
-		#elif !defined(ENERGIA) && !defined(SPI_HAS_TRANSACTION) && !defined(___STM32STUFF)
+		#elif !defined(ENERGIA) && !defined(SPI_HAS_TRANSACTION) && !defined(___STM32STUFF) && !defined(__RPI__)
 			cli();//protect from interrupts
 		#endif//end has transaction
 		#if defined(___TEENSYES)//all of them (32 bit only)
@@ -700,7 +704,7 @@ using Print::write;
 		#else
 			SPI.endTransaction();
 		#endif
-	#elif !defined(ENERGIA) && !defined(SPI_HAS_TRANSACTION) && !defined(___STM32STUFF)
+	#elif !defined(ENERGIA) && !defined(SPI_HAS_TRANSACTION) && !defined(___STM32STUFF) && !defined(__RPI__)
 		sei();//enable interrupts
 	#endif
 } 
