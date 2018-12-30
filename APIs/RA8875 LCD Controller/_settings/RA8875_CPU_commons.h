@@ -189,6 +189,6 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 	#error "your board is not supported yet!"
 #endif
 
-#include "Print.h"
+//#include "Print.h"
 
 #endif
