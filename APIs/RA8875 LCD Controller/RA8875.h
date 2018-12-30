@@ -650,7 +650,7 @@ virtual size_t write(const uint8_t *buffer, size_t size) {
 			#else
 				SPI.beginTransaction(SPISettings(_SPImaxSpeed, MSBFIRST, SPI_MODE3));
 			#endif
-		#elif !defined(ENERGIA) && !defined(SPI_HAS_TRANSACTION) && !defined(___STM32STUFF)
+		#elif !defined(ENERGIA) && !defined(SPI_HAS_TRANSACTION) && !defined(___STM32STUFF) && !defined(__RPI__)
 			cli();//protect from interrupts
 		#endif//end has transaction
 		#if defined(___TEENSYES)//all of them (32 bit only)
@@ -702,7 +702,7 @@ virtual size_t write(const uint8_t *buffer, size_t size) {
 		#else
 			SPI.endTransaction();
 		#endif
-	#elif !defined(ENERGIA) && !defined(SPI_HAS_TRANSACTION) && !defined(___STM32STUFF)
+	#elif !defined(ENERGIA) && !defined(SPI_HAS_TRANSACTION) && !defined(___STM32STUFF) && !defined(__RPI__)
 		sei();//enable interrupts
 	#endif
 } 
