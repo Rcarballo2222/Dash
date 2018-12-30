@@ -1,6 +1,6 @@
 #define __RPI__
-#include <stdint.h>
 #include "RA8875.h"
+#include "RA8875.cpp"
 #include <wiringPiSPI.h>
 #include <wiringPi.h>
 
