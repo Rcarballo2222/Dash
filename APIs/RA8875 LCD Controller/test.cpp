@@ -1,8 +1,8 @@
+#define __RPI__
+#include <stdint.h>
 #include "RA8875.h"
 #include <wiringPiSPI.h>
 #include <wiringPi.h>
-
-#define __RPI__
 
 using namespace RA8875;
 
