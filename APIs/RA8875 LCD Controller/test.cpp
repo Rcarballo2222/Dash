@@ -1,16 +1,16 @@
 #define __RPI__
 #include "RA8875.h"
-#include "RA8875.cpp"
+//#include "RA8875.cpp"
 #include <wiringPiSPI.h>
 #include <wiringPi.h>
 
-using namespace RA8875;
+RA8875 d = RA8875(0, 13); 
 
 void main(int argc, char const *argv[])
 {
-    begin(RA8875_800x480 ,16);
-    _initialize();
-    clearMemory(false);
-    displayOn(boolean true);
+    d.begin(RA8875_800x480 ,16);
+    d._initialize();
+    d.clearMemory(false);
+    d.displayOn(boolean true);
     return 0;
 }
