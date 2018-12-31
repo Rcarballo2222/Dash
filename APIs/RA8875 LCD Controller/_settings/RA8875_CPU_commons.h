@@ -197,4 +197,6 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 	#include "Print.h"
 #endif
 
+#warning "RPI is Defined"
+
 #endif
