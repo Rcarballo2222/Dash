@@ -193,10 +193,7 @@ Part of RA8875 library from https://github.com/sumotoy/RA8875
 #endif
 
 #if !defined(__RPI__)
-	#warning "RPI NOT DEFINED"
 	#include "Print.h"
 #endif
-
-#warning "RPI is Defined"
 
 #endif
