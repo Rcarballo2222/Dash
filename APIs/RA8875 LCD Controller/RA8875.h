@@ -189,6 +189,7 @@ template <typename T> T PROGMEM_read (const T * sce)
 	static volatile uint32_t _SPImaxSpeed;//holder for SPI speed
 #endif
 
+#define Print
 
 class RA8875 : public Print {
  public:

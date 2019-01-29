@@ -1954,10 +1954,12 @@ void RA8875::_textWrite(const char* buffer, uint16_t len)
 	}
 	#if defined(RA8875_TXTBENCH) && !defined(RA8875_VISPIXDEBUG)
 	  unsigned long result = micros() - start;
-	  Serial.print("Text Rendered in:");
-	  Serial.print(result);
-	  Serial.print(" ms");
-	  Serial.print("\n");
+	  #if !defined(__RPI__)
+	  	Serial.print("Text Rendered in:");
+	  	Serial.print(result);
+	  	Serial.print(" ms");
+	  	Serial.print("\n");
+	  #endif	  
 	#endif
 }
 
@@ -4014,9 +4016,11 @@ void RA8875::ringMeter(int val, int minV, int maxV, int16_t x, int16_t y, uint16
 		} else {
 			setCursor(x - 15, y, true);
 		}
-		print(val);
-		print(" ");
-		print(units);
+		#if !defined(__RPI__)
+			print(val);
+			print(" ");
+			print(units);
+		#endif	
 	}
 
 	// Calculate and return right hand side x coordinate
