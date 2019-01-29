@@ -126,6 +126,9 @@ CS       10		53           YES       CS
 #ifndef _RA8875MC_H_
 #define _RA8875MC_H_
 
+#if defined(__RPI__)
+	#include "Print.h"
+
 #include "_settings/RA8875_CPU_commons.h"
 
 #if !defined(swapvals)
@@ -189,9 +192,7 @@ template <typename T> T PROGMEM_read (const T * sce)
 	static volatile uint32_t _SPImaxSpeed;//holder for SPI speed
 #endif
 
-#define Print
-
-class RA8875{
+class RA8875 : public Print {
  public:
 	// void 		debugData(uint16_t data,uint8_t len=8);
 	// void 		showLineBuffer(uint8_t data[],int len);
@@ -405,9 +406,9 @@ virtual size_t write(const uint8_t *buffer, size_t size) {
 	return size;
 }
 
-#if !defined(__RPI__)
-	using Print::write;
-#endif
+//#if !defined(__RPI__)
+using Print::write;
+//#endif
 
  protected:
 	volatile bool 				  _textMode;
