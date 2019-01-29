@@ -190,8 +190,7 @@ template <typename T> T PROGMEM_read (const T * sce)
 #endif
 
 
-
-class RA8875 : public Print {
+class RA8875 /*: public Print*/ {
  public:
 	// void 		debugData(uint16_t data,uint8_t len=8);
 	// void 		showLineBuffer(uint8_t data[],int len);
