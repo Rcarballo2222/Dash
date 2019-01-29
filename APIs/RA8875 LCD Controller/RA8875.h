@@ -122,6 +122,7 @@ MISO     12		50            NO       MISO
 RST      9		 5           YES       RST
 CS       10		53           YES       CS
 */
+#define __RPI__
 
 #ifndef _RA8875MC_H_
 #define _RA8875MC_H_
