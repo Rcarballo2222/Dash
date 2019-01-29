@@ -18,14 +18,14 @@ License:GNU General Public License v3.0
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include "RA8875.h"
+
 #if defined (__RPI__) //Using wiringPi library for SPI on the Raspberry Pi
 	#include <wiringPiSPI.h>
 	#include <wiringPi.h>
 #else
 	#include <SPI.h>
 #endif
-
-#include "RA8875.h"
 
 
 #if defined (USE_FT5206_TOUCH)
