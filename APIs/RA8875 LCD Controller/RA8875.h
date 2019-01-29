@@ -128,6 +128,7 @@ CS       10		53           YES       CS
 
 #if defined(__RPI__)
 	#include "Print.h"
+#endif
 
 #include "_settings/RA8875_CPU_commons.h"
 
