@@ -6,11 +6,10 @@
 
 RA8875 d = RA8875(0, 13); 
 
-void main(int argc, char const *argv[])
+int main(int argc, char const *argv[])
 {
     d.begin(RA8875_800x480 ,16);
-    d._initialize();
     d.clearMemory(false);
-    d.displayOn(boolean true);
+    d.displayOn(true);
     return 0;
 }
