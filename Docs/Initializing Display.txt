@@ -1,0 +1,26 @@
+Install kernel module:
+sudo modprobe fbtft_device name=er_tftm070_5
+
+Display image:
+sudo fbi -d /dev/fb1 -T 1 -a BorisTux_w_Logo.png
+
+Load module on boot:
+1. sudo vim /etc/modprobe.d/fbtftdevice.conf
+	install fbtft_device /sbin/modprobe spi_bcm2835; /sbin/modprobe --ignore-install fbtft_device
+	options fbtft_device name=er_tftm070_5 fps=50 speed=25000000
+
+Load Framebuffer on boot:
+1. sudo vim /boot/cmdline.txt
+	fbcon = map: 10		(add to end of current line)
+
+Run Terminal in X-Server:
+1. Add 99-fbdev.conf to /usr/share/X11/xorg.conf.d
+2. Set Boot options to use desktop GUI
+3. DISPLAY should be auto set, but export DISPLAY=:0 if not
+
+https://www.raspberrypi.org/forums/viewtopic.php?t=111817#p1041032
+https://www.raspberrypi.org/forums/viewtopic.php?t=180649
+
+20:12:26 T:18446744073318863379   DEBUG: COMXCoreComponent::Initialize OMX.broadcom.video_decode input port 130 output port 131 m_handle 0x4efe50
+20:12:26 T:18446744073318864501   ERROR: COMXCoreComponent::SetParameter - OMX.broadcom.video_decode failed with omx_err(0x80001005)
+20:12:26 T:18446744073318866660   DEBUG: COMXCoreComponent::Deinitialize : OMX.broadcom.video_decode handle 0x4efe50
