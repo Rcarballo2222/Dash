@@ -1,5 +1,5 @@
 import logging
-import st7565.bitops as bitops
+import ST7565_LCD.st7565.bitops as bitops
 
 LOG = logging.getLogger(__name__)
 
@@ -163,7 +163,7 @@ class Bitmap (list):
 def main():
     
     bit_map = Bitmap()
-    print(bit_map.dump())
+    print((bit_map.dump()))
 
 if __name__ == '__main__':
     main()

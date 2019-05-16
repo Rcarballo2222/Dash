@@ -2,13 +2,13 @@
 Contains functions that simplify weather data acquisition for the display
 """
 
-import forecastiopy.ForecastIO as ForecastIO
-import forecastiopy.FIOAlerts as FIOAlerts
-import forecastiopy.FIOCurrently as FIOCurrently
-import forecastiopy.FIODaily as FIODaily
-import forecastiopy.FIOFlags as FIOFlags
-import forecastiopy.FIOHourly as FIOHourly
-import forecastiopy.FIOMinutely as FIOMinutely
+import Forecast_IO_py.forecastiopy.ForecastIO as ForecastIO
+import Forecast_IO_py.forecastiopy.FIOAlerts as FIOAlerts
+import Forecast_IO_py.forecastiopy.FIOCurrently as FIOCurrently
+import Forecast_IO_py.forecastiopy.FIODaily as FIODaily
+import Forecast_IO_py.forecastiopy.FIOFlags as FIOFlags
+import Forecast_IO_py.forecastiopy.FIOHourly as FIOHourly
+import Forecast_IO_py.forecastiopy.FIOMinutely as FIOMinutely
 from datetime import datetime
 
 

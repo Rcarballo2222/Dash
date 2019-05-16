@@ -6,8 +6,6 @@ import os.path
 import pickle
 import urllib3
 from PIL import Image
-import Adafruit_BBIO.GPIO as GPIO
-import Adafruit_BBIO.SPI as SPI
 
 
 import ST7565_LCD.st7565.images.images as images
@@ -209,7 +207,7 @@ def update():
     temp = weather.get_temperature(current)
     icon = icons[weather.get_icon(current)]
     chance_of_rain = weather.get_rain_chance(fio)
-    print(temp, weather.get_icon(current))
+    print((temp, weather.get_icon(current)))
     #lcd.clear()
     """
     screen = images.display_img(icon, screen, lcd, 70, 77)

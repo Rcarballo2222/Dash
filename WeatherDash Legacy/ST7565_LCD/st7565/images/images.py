@@ -7,8 +7,8 @@ import random
 from os import walk
 from PIL import Image
 
-import st7565.bitmap
-import st7565.lcd
+import ST7565_LCD.st7565.bitmap
+import ST7565_LCD.st7565.lcd
 
 images_path = os.path.dirname(os.path.realpath(__file__)) + "/"
 
@@ -19,7 +19,7 @@ def create_img(file_name):
         return fit_to_display(img)
         
     except IOError:
-        print("Specified image file: %s cannot be found at: %s" % (file_name,images_path))
+        print(("Specified image file: %s cannot be found at: %s" % (file_name,images_path)))
 
 def create_images():
     """
@@ -97,7 +97,7 @@ def display_img(img, screen, lcd, size = 100, x=0, y=0):
         return screen
     except IndexError:
         size = img.size
-        print("Image with size (%d,%d) cannot be fit onto (128, 64) size display using given coordinates: (%d,%d)" % (size[0], size[1], x, y))
+        print(("Image with size (%d,%d) cannot be fit onto (128, 64) size display using given coordinates: (%d,%d)" % (size[0], size[1], x, y)))
     
 def shift_imgs(screen, lcd):
     lcd.clear()

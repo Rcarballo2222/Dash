@@ -24,7 +24,7 @@ class FIOCurrently(object):
         """
         if forecast_io.has_currently():
             self.currently = forecast_io.get_currently()
-            for item in self.currently.keys():
+            for item in list(self.currently.keys()):
                 setattr(self, item, self.currently[item])
 
     def get(self):

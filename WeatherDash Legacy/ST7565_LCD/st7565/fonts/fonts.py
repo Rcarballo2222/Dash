@@ -41,7 +41,7 @@ def create_font(font_name, fit = True):
             font[str(i)] = numbers.crop(box) 
         return font
     except IOError:
-        print("Specified font file: %s.jpg cannot be found at: %s" % (font_name,fonts_path))
+        print(("Specified font file: %s.jpg cannot be found at: %s" % (font_name,fonts_path)))
 def display_c(c, font, screen, lcd, size=5, x=0, y=0):
     """
     Displays a character in the given `font` with top-left corner at the specified `x` and `y` coordinates

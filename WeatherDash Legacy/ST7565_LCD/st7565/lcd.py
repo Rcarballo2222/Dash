@@ -4,9 +4,9 @@ import logging
 import Adafruit_BBIO.GPIO as GPIO
 import Adafruit_BBIO.SPI as SPI
 
-import st7565.spidev
-import st7565.ops
-import st7565.fonts.font5x7 as font5x7
+import ST7565_LCD.st7565.spidev
+import ST7565_LCD.st7565.ops
+import ST7565_LCD.st7565.fonts.font5x7 as font5x7
 
 LOG = logging.getLogger(__name__)
 
@@ -266,7 +266,7 @@ class LCD (object):
         self.send_command([st7565.ops.BRIGHTNESS_SET, val])
 
     def set_static_indicator(self, on=True, mode=STATIC_ALWAYS_ON):
-        if mode not in range(0, 4):
+        if mode not in list(range(0, 4)):
             raise ValueError(mode)
 
         op = st7565.ops.STATIC_INDICATOR_SET | int(on)

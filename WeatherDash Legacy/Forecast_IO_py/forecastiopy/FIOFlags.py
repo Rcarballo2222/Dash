@@ -20,7 +20,7 @@ class FIOFlags(object):
         """
         if forecast_io.has_flags():
             self.flags = forecast_io.get_flags()
-            for item in self.flags.keys():
+            for item in list(self.flags.keys()):
                 setattr(self, item, self.flags[item])
 
     def get(self):
@@ -33,4 +33,4 @@ class FIOFlags(object):
         """
         Returns the available flags available in weather data
         """
-        return self.get().keys()
+        return list(self.get().keys())

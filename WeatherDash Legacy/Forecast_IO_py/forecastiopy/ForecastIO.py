@@ -103,7 +103,7 @@ class ForecastIO(object):
         reply = self.http_get(self.url_builder(latitude, longitude))
         self.forecast = json.loads(reply)
 
-        for item in self.forecast.keys():
+        for item in list(self.forecast.keys()):
             setattr(self, item, self.forecast[item])
             
     def url_builder(self, latitude, longitude):
@@ -175,7 +175,7 @@ class ForecastIO(object):
             self.x_forecast_api_calls = response.headers['X-Forecast-API-Calls']
             self.x_responde_time = response.headers['X-Response-Time']
         except KeyError as kerr:
-            print('Warning: Could not get headers. %s') % kerr
+            print(('Warning: Could not get headers. %s') % kerr)
 
         if response.status_code is not 200:
             raise requests.exceptions.HTTPError('Bad response')

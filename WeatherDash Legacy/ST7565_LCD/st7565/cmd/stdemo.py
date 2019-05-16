@@ -25,7 +25,7 @@ screen = None
 
 
 def pulse():
-    for angle in cycle(range(0, 361)):
+    for angle in cycle(list(range(0, 361))):
         r = (math.sin(math.radians(angle)) + 1)/2
         g = (math.sin(math.radians((angle + 90) % 360)) + 1)/2
         b = (math.sin(math.radians((angle + 180) % 360)) + 1)/2
