@@ -207,7 +207,7 @@ def update():
     temp = weather.get_temperature(current)
     icon = icons[weather.get_icon(current)]
     chance_of_rain = weather.get_rain_chance(fio)
-    print((temp, weather.get_icon(current)))
+    return (temp, weather.get_icon(current))
     #lcd.clear()
     """
     screen = images.display_img(icon, screen, lcd, 70, 77)
