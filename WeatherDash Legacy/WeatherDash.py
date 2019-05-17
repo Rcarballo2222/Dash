@@ -5,11 +5,11 @@ import os
 import os.path
 import pickle
 import urllib3
-from PIL import Image
+#from PIL import Image
 
 
-import ST7565_LCD.st7565.images.images as images
-import ST7565_LCD.st7565.fonts.fonts as fonts
+#import ST7565_LCD.st7565.images.images as images
+#import ST7565_LCD.st7565.fonts.fonts as fonts
 #import ST7565_LCD.st7565.bitmap as bitmap
 #import ST7565_LCD.st7565.fonts.font5x7 as font5x7
 #import ST7565_LCD.st7565.lcd as lcd
@@ -52,7 +52,7 @@ lcd = lcd.LCD(adafruit=True)
 screen = bitmap.Bitmap()
 """
 
-icons = images.create_images()
+#icons = images.create_images()
 fio = ForecastIO.ForecastIO(APIKEY,units=ForecastIO.ForecastIO.UNITS_US,lang=ForecastIO.ForecastIO.LANG_ENGLISH)
 
 TIMEZONES = {}
@@ -67,7 +67,8 @@ Functions
 """
 
 def reboot():
-    os.system("sudo reboot")
+    print("Couldn't fetch weather data")
+    #os.system("sudo reboot")
 
 def sleep():
     global lcd
@@ -196,16 +197,16 @@ def update():
     """
     Main Code
     """
-    try:
-        with timeout.timeout(seconds=TIMEOUT):
-            fio.get_forecast(cur_location[0], cur_location[1])
-    except:
-        retry_attempt()
+    #try:
+        #with timeout.timeout(seconds=TIMEOUT):
+    fio.get_forecast(cur_location[0], cur_location[1])
+    #except:
+    #    retry_attempt()
         
     fiocur = FIOCurrently.FIOCurrently(fio)
     current = fiocur.get()
     temp = weather.get_temperature(current)
-    icon = icons[weather.get_icon(current)]
+    #icon = icons[weather.get_icon(current)]
     chance_of_rain = weather.get_rain_chance(fio)
     return (temp, weather.get_icon(current))
     #lcd.clear()
