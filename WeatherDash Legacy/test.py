@@ -2,8 +2,6 @@ import WeatherDash
 import os
 import tkinter as tk
 
-os.system("sudo startx")
-
 weather = WeatherDash.update()
 
 class Application(tk.Frame):
